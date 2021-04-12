@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:get/get.dart';
 
 import './lang/en_us.dart';
-import './lang/jap.dart';
+import 'lang/ja_jp.dart';
 
 class AppTranslation extends Translations {
   // Default locale
@@ -15,7 +15,6 @@ class AppTranslation extends Translations {
   // Needs to be same order with locales
   static final langs = [
     'English',
-    'Türkçe',
     '日本語',
   ];
 
