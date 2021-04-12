@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 
 import 'app/app.binding.dart';
 import 'app/app.page.dart';
+import 'app/core/theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +17,7 @@ void main() async {
       debugShowCheckedModeBanner: false,
       initialBinding: AppBinding(),
       defaultTransition: Transition.fade,
+      theme: appThemeData,
       home: AppPage(),
     ));
   }, FirebaseCrashlytics.instance.recordError);
