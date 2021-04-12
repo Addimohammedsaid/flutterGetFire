@@ -8,7 +8,7 @@ final ThemeData appThemeData = ThemeData(
   accentColor: AppColors.WHITE,
   splashColor: AppColors.TEAL,
   highlightColor: AppColors.TEAL,
-  fontFamily: 'Arial',
+  fontFamily: 'Poppins',
   textTheme: TextTheme(
     headline1: AppText.TITLE,
     bodyText1: AppText.TEXT,

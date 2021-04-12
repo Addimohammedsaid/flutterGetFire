@@ -3,6 +3,9 @@ import 'dart:ui';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,6 +15,15 @@ import 'app/core/theme/app_theme.dart';
 import 'app/core/translations/app_translation.dart';
 
 void main() async {
+  // fonts license
+  LicenseRegistry.addLicense(() async* {
+    final license = await rootBundle.loadString('../../OFL.txt');
+    yield LicenseEntryWithLineBreaks(['google_fonts'], license);
+  });
+
+  // get env file
+  await DotEnv.load(fileName: '.env');
+
   // firebase initialize
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
