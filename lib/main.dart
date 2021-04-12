@@ -1,15 +1,22 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'dart:async';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'app/app.binding.dart';
 import 'app/app.page.dart';
 
-void main() {
-  runApp(GetMaterialApp(
-    debugShowCheckedModeBanner: false,
-    initialBinding: AppBinding(),
-    defaultTransition: Transition.fade,
-    home: AppPage(),
-  ));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runZonedGuarded(() {
+    runApp(GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      initialBinding: AppBinding(),
+      defaultTransition: Transition.fade,
+      home: AppPage(),
+    ));
+  }, FirebaseCrashlytics.instance.recordError);
 }

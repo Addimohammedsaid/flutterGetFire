@@ -21,6 +21,9 @@ dependencies:
   # Database
   cloud_firestore:
 
+  # Services
+  firebase_core:
+
   # Logic
   get: ^4.1.4
 
@@ -30,6 +33,7 @@ dependencies:
 
   # Analytics
   firebase_analytics:
+  firebase_crashlytics: ^2.0.0
 
   # Performance
   firebase_performance:
