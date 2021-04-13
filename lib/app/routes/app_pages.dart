@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get_fire_starter/app/ui/pages/home.page.dart';
+import '../app.binding.dart';
 part './app_routes.dart';
 
 class AppPages {
@@ -7,6 +8,7 @@ class AppPages {
     GetPage(
       name: Routes.INITIAL,
       page: () => HomePage(),
+      binding: HomeBinding(),
     ),
   ];
 }
