@@ -1,19 +1,21 @@
 import 'package:flutter/cupertino.dart';
 
-import '../provider/cloud_firestore.provider.dart';
 import '../model/user.model.dart';
+import '../provider/cloud_firestore.provider.dart';
 
 class UserRepository {
   final CloudFirestoreApi apiClient;
 
   UserRepository({@required this.apiClient}) : assert(apiClient != null);
 
-  getAll() {
-    return apiClient.getCollection();
+  Future<List<UserModel>> getAll() async {
+    final result = await apiClient.getCollection();
+    return result.docs.map((json) => UserModel.fromJson(json.data()));
   }
 
-  getId(id) {
-    return apiClient.getDocument(id);
+  Future<UserModel> getId(id) async {
+    final json = await apiClient.getDocument(id);
+    return UserModel.fromJson(json.data());
   }
 
   delete(id) {
