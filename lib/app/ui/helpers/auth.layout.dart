@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get_fire_starter/app/core/theme/app_color.dart';
-import 'package:get_fire_starter/app/ui/widgets/social_buttons.widget.dart';
 import 'style.dart';
 
 class AuthenticationLayout extends StatelessWidget {
@@ -8,10 +7,7 @@ class AuthenticationLayout extends StatelessWidget {
   final String subtitle;
   final String mainButtonTitle;
   final Widget form;
-  final bool socialButtons;
-  final bool signup;
   final void Function() onMainButtonTapped;
-  final void Function() onCreateAccountTapped;
   final void Function() onForgotPassword;
   final void Function() onBackPressed;
   final Widget bottomWidget;
@@ -26,12 +22,9 @@ class AuthenticationLayout extends StatelessWidget {
     this.form,
     this.bottomWidget,
     this.onMainButtonTapped,
-    this.onCreateAccountTapped,
     this.onForgotPassword,
     this.onBackPressed,
     this.validationMessage,
-    this.socialButtons = false,
-    this.signup = false,
     this.busy = false,
   }) : super(key: key);
 
@@ -39,7 +32,7 @@ class AuthenticationLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(children: [
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: ListView(
           children: [
             if (onBackPressed == null) verticalSpaceLarge,
@@ -62,20 +55,28 @@ class AuthenticationLayout extends StatelessWidget {
                           fontWeight: FontWeight.normal)),
                 ],
               ),
-            if (onBackPressed != null) verticalSpaceMedium,
-            Text(title,
-                style: Theme.of(context).textTheme.headline1,
-                textAlign: TextAlign.center),
+            if (onBackPressed != null) verticalSpaceRegular,
+            if (title != null)
+              Text(title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1
+                      .copyWith(color: Colors.black87, fontSize: 34),
+                  textAlign: TextAlign.left),
             verticalSpaceSmall,
-            Align(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: screenWidthPercentage(context, percentage: 0.7),
-                child: Text(subtitle,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyText1),
+            if (subtitle != null)
+              Align(
+                alignment: Alignment.centerLeft,
+                child: SizedBox(
+                  width: screenWidthPercentage(context, percentage: 1),
+                  child: Text(subtitle,
+                      textAlign: TextAlign.left,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline1
+                          .copyWith(fontWeight: FontWeight.w500)),
+                ),
               ),
-            ),
             verticalSpaceLarge,
             form ?? SizedBox.shrink(),
             verticalSpaceTiny,
@@ -107,11 +108,6 @@ class AuthenticationLayout extends StatelessWidget {
                               fontWeight: FontWeight.normal),
                         ),
                 ),
-              ),
-            if (socialButtons) verticalSpaceVeryLarge,
-            if (socialButtons)
-              SocialButtonsWidget(
-                signup: this.signup,
               ),
           ],
         ),

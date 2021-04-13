@@ -7,7 +7,6 @@ class AppPage extends GetView<AppController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('AppPage')),
-        body: SafeArea(child: Text('AppController')));
+        body: SafeArea(child: Center(child: Text('GET FIRE FLUTTRER'))));
   }
 }

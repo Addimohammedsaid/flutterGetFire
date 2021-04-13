@@ -7,6 +7,6 @@ export './bindings/auth.binding.dart';
 class AppBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<AppController>(() => AppController());
+    Get.put<AppController>((AppController()));
   }
 }
