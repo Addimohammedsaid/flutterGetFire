@@ -7,29 +7,41 @@ import 'package:get_fire_starter/app/controller/auth.controller.dart';
 class ForgotPasswordPage extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
+    final GlobalKey key = GlobalKey<FormState>();
     return Scaffold(
       body: AuthenticationLayout(
         title: "Reset Password",
         subtitle: "Please fill up your email",
-        onMainButtonTapped: () => controller.sendResetPassword,
-        form: Column(
-          children: [
-            TextFormField(
-              keyboardType: TextInputType.emailAddress,
-              onSaved: (value) => controller.email = value,
-              style: TextStyle(fontSize: 20),
-              decoration: InputDecoration(
-                labelText: "Email",
-                labelStyle: TextStyle(fontSize: 16.0),
+        mainButtonTitle: "Send",
+        onMainButtonTapped: () {
+          final FormState form = key.currentState;
+          if (form.validate()) {
+            form.save();
+            controller.sendResetPassword();
+          } else
+            print('error');
+        },
+        form: Form(
+          key: key,
+          child: Column(
+            children: [
+              TextFormField(
+                keyboardType: TextInputType.emailAddress,
+                onSaved: (value) => controller.email = value,
+                style: TextStyle(fontSize: 20),
+                decoration: InputDecoration(
+                  labelText: "Email",
+                  labelStyle: TextStyle(fontSize: 16.0),
+                ),
+                validator: (value) {
+                  if (!isEmail(value)) {
+                    return 'Insert valid email';
+                  } else
+                    return null;
+                },
               ),
-              validator: (value) {
-                if (!isEmail(value)) {
-                  return 'Insert valid email';
-                } else
-                  return null;
-              },
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

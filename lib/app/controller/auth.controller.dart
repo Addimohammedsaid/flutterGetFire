@@ -106,6 +106,7 @@ class AuthController extends GetxController {
 
   sendResetPassword() {
     this.authService.sendPasswordResetMail(email);
+    Get.toNamed("/");
   }
 
   resetPassword() {

@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
-import 'package:get_fire_starter/app/controller/auth.controller.dart';
-import 'package:get_fire_starter/app/ui/pages/authentification/change_password.page.dart';
+import 'package:get_fire_starter/app/ui/pages/authentification/forgot_password.page.dart';
 import 'package:get_fire_starter/app/ui/pages/authentification/login.page.dart';
 import 'package:get_fire_starter/app/ui/pages/authentification/register.page.dart';
 import 'package:get_fire_starter/app/ui/pages/authentification/verify_email.page.dart';
@@ -32,8 +31,8 @@ class AppPages {
       binding: VerifyEmailBinding(),
     ),
     GetPage(
-      name: Routes.PASSWORD,
-      page: () => ChangePasswordPage(),
+      name: Routes.RESET,
+      page: () => ForgotPasswordPage(),
       binding: AuthBinding(),
     ),
     GetPage(

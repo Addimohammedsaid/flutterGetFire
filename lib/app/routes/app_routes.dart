@@ -6,6 +6,6 @@ abstract class Routes {
   static const EMAIL = '/verify/email';
   static const REGISTER = '/register';
   static const PASSWORD = '/change/password';
-  static const RESET = '/reset/password';
+  static const RESET = '/forgot/password';
   static const LOADING = '/loading';
 }

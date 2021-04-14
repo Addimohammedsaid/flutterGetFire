@@ -159,6 +159,7 @@ class AuthentificationService extends GetxService {
 
   // send password reset email
   Future<void> sendPasswordResetMail(String email) async {
+    print("sent reset password");
     await _auth.sendPasswordResetEmail(email: email);
     return null;
   }
