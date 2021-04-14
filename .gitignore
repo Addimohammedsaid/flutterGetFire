@@ -48,3 +48,4 @@ app.*.map.json
 
 # firebase ignore
 google-services.json
+GoogleService-Info.plist
