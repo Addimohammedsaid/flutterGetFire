@@ -59,7 +59,7 @@ class AuthentificationService extends GetxService {
   }
 
   // verify email
-  Future verifyEmail() async {
+  Future reloadUser() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     try {
       // If successful, reload the user:
@@ -75,9 +75,13 @@ class AuthentificationService extends GetxService {
   }
 
   // send email verification
-  Future sendEmailVerification() async {
-    // send email verfication with firebase
-    await user.sendEmailVerification();
+  Future<bool> sendEmailVerification() async {
+    try {
+      // send email verfication with firebase
+      return await user.sendEmailVerification().then((value) => true);
+    } catch (e) {
+      throw e;
+    }
   }
 
   //google_sign_in: ^4.5.1

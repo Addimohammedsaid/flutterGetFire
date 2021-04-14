@@ -13,6 +13,9 @@ class AppController extends GetxController {
   // used for getting user data
   AuthentificationService _auth = AuthentificationService();
 
+  bool allowVerifyEmail = true;
+  bool allowLoading = true;
+
   @override
   onInit() {
     // start collecting one intilized
@@ -28,15 +31,17 @@ class AppController extends GetxController {
     _auth.getUserChanges().listen((user) {
       print(user);
 
-      // if user is verifed & logged in
-      if (user != null && user.emailVerified) {
-        Get.offAllNamed("/");
-        // if user is not logged in
-      } else if (user == null)
+      // if user is not logged in
+      if (user == null)
         Get.offAllNamed("/login");
+      // if user is not verifed
+      else if (!user.emailVerified && allowVerifyEmail)
+        Get.offAllNamed("/verify/email");
+      // if user is verifed & logged in
+      else if (user.emailVerified)
+        Get.offAllNamed("/");
       // default redirect to loading page
-      else
-        Get.offNamed("/loading");
+      else if (allowLoading) Get.offNamed("/loading");
     });
 
     super.onInit();

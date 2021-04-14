@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_fire_starter/app/ui/pages/authentification/login.page.dart';
 import 'package:get_fire_starter/app/ui/pages/authentification/register.page.dart';
+import 'package:get_fire_starter/app/ui/pages/authentification/verify_email.page.dart';
 import 'package:get_fire_starter/app/ui/pages/home.page.dart';
 import 'package:get_fire_starter/app/ui/helpers/loading.page.dart';
 import '../app.binding.dart';
@@ -22,6 +23,11 @@ class AppPages {
       name: Routes.REGISTER,
       page: () => RegisterPage(),
       binding: AuthBinding(),
+    ),
+    GetPage(
+      name: Routes.EMAIL,
+      page: () => VerifyEmailPage(),
+      binding: VerifyEmailBinding(),
     ),
     GetPage(
       name: Routes.LOADING,
