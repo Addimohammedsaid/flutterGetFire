@@ -15,7 +15,6 @@ class AppController extends GetxController {
 
   bool allowVerifyEmail = true;
   bool allowResetPassword = false;
-  bool allowLoading = true;
 
   @override
   onInit() {
@@ -39,9 +38,12 @@ class AppController extends GetxController {
       else if (!user.emailVerified && allowVerifyEmail)
         Get.offAllNamed("/verify/email");
       // if user is verifed & logged in
-      else if (user.emailVerified)
+      else if (user.emailVerified == true)
         Get.offAllNamed("/");
-      else if (allowResetPassword) Get.offAllNamed("/change/password");
+      else if (allowResetPassword)
+        Get.offAllNamed("/change/password");
+      else
+        Get.toNamed("/loading");
     });
 
     super.onInit();

@@ -24,6 +24,9 @@ class VerifyEmailController extends GetxController {
   RxInt _countDown = RxInt(null);
   get countDown => this._countDown.value;
 
+  RxBool _busy = RxBool(false);
+  get busy => this._busy.value;
+
   // change time to reload user here
   Duration timeToReloadUser = Duration(seconds: 10);
 
@@ -34,7 +37,8 @@ class VerifyEmailController extends GetxController {
   void onInit() {
     // lock navigation
     appController.allowVerifyEmail = false;
-    appController.allowLoading = false;
+
+    this.sendMail();
 
     this.sendMailFunc.value = this.timerFunction();
 
@@ -51,8 +55,6 @@ class VerifyEmailController extends GetxController {
 
     if (this.authService.isVerifiedEmail()) {
       // do somthing if verified.....
-      appController.allowVerifyEmail = true;
-      appController.allowLoading = true;
     }
   }
 
@@ -79,7 +81,7 @@ class VerifyEmailController extends GetxController {
         (Timer timer) {
           if (this._countDown.value == 0) {
             // reset countDown
-            this._countDown.value = 60;
+            this._countDown.value = null;
 
             // stop the function
             timer.cancel();

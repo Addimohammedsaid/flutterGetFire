@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
       ],
       fallbackLocale: AppTranslation.fallbackLocale,
       translations: AppTranslation(),
-      home: AppPage(),
+      initialRoute: "/login",
       getPages: AppPages.pages,
     );
   }

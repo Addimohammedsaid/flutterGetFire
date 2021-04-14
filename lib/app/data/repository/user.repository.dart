@@ -13,6 +13,11 @@ class UserRepository {
     return result.docs.map((json) => UserModel.fromJson(json.data()));
   }
 
+  Stream<List<UserModel>> getStreamAll() {
+    return apiClient.getStreamCollection().map((query) =>
+        query.docs.map((e) => UserModel.fromJson(e.data())).toList());
+  }
+
   Future<UserModel> getId(id) async {
     final json = await apiClient.getDocument(id);
     return UserModel.fromJson(json.data());

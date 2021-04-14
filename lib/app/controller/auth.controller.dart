@@ -29,7 +29,9 @@ class AuthController extends GetxController {
       // reset validation errors to nothing
       error.value = null;
 
-      await this.authService.createUserWithEmailAndPassword(email, password);
+      final user = await this
+          .authService
+          .createUserWithEmailAndPassword(email, password);
     } catch (e) {
       error.value = e;
       Get.snackbar("Error", e.value);
