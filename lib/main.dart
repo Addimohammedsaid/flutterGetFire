@@ -10,7 +10,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_fire_starter/app/app.page.dart';
 
 import 'app/app.binding.dart';
 import 'app/routes/app_pages.dart';
@@ -43,7 +42,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       initialBinding: AppBinding(),
-      title: 'Flutter Get Fire',
+      title: 'Flutter GetX Fire',
       debugShowCheckedModeBanner: false,
       defaultTransition: Transition.fade,
       theme: appThemeData,
@@ -53,7 +52,7 @@ class MyApp extends StatelessWidget {
       ],
       fallbackLocale: AppTranslation.fallbackLocale,
       translations: AppTranslation(),
-      initialRoute: "/login",
+      initialRoute: "/welcome",
       getPages: AppPages.pages,
     );
   }

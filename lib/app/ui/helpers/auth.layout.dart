@@ -82,6 +82,7 @@ class AuthenticationLayout extends StatelessWidget {
             verticalSpaceTiny,
             if (validationMessage != null)
               Text(validationMessage ?? "",
+                  textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.redAccent)),
             if (validationMessage != null) verticalSpaceRegular,
             verticalSpaceRegular,

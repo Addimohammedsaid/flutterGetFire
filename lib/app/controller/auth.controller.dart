@@ -8,7 +8,7 @@ class AuthController extends GetxController {
   RxString _password = ''.obs;
   RxString error = RxString(null);
 
-  RxBool busy = RxBool(true);
+  RxBool busy = RxBool(false);
   RxBool obscureText = RxBool(true);
 
   // GETTERS & SETTERS
@@ -34,7 +34,7 @@ class AuthController extends GetxController {
           .createUserWithEmailAndPassword(email, password);
     } catch (e) {
       error.value = e;
-      Get.snackbar("Error", e.value);
+      Get.snackbar("Error", error.value);
     }
   }
 
@@ -44,33 +44,26 @@ class AuthController extends GetxController {
       await this.authService.signInUserWithEmailAndPassword(email, password);
     } catch (e) {
       error.value = e;
-      Get.snackbar("Error", e.value);
+      Get.snackbar("Error", error.value);
     }
   }
 
   // google singup & login
   void signUpWithGoogle() async {
     try {
-      final user = await this.authService.signInWithGoogle();
-      if (user != null) {
-        Get.toNamed("/select/location");
-      }
+      await this.authService.signInWithGoogle();
     } catch (e) {
-      error.value = e;
-      Get.snackbar("Error", e.value);
+      print(e);
     }
   }
 
   // google singup & login
   void signUpWithApple() async {
     try {
-      final user = await this.authService.signInWithApple();
-      if (user != null) {
-        Get.offAndToNamed("/select/location");
-      }
+      await this.authService.signInWithApple();
     } catch (e) {
       error.value = e;
-      Get.snackbar("Error", e.value);
+      Get.snackbar("Error", error.value);
     }
   }
 
@@ -80,7 +73,7 @@ class AuthController extends GetxController {
       this.authService.signInWithGoogle();
     } catch (e) {
       error.value = e;
-      Get.snackbar("Error", e.value);
+      Get.snackbar("Error", error.value);
     }
   }
 
@@ -90,7 +83,7 @@ class AuthController extends GetxController {
       this.authService.signInWithApple();
     } catch (e) {
       error.value = e;
-      Get.snackbar("Error", e.value);
+      Get.snackbar("Error", error.value);
     }
   }
 
@@ -100,7 +93,7 @@ class AuthController extends GetxController {
       await this.authService.signOut();
     } catch (e) {
       error.value = e;
-      Get.snackbar("Error", e.value);
+      Get.snackbar("Error", error.value);
     }
   }
 

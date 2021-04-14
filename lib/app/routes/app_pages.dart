@@ -4,6 +4,7 @@ import 'package:get_fire_starter/app/ui/pages/authentification/login.page.dart';
 import 'package:get_fire_starter/app/ui/pages/authentification/register.page.dart';
 import 'package:get_fire_starter/app/ui/pages/authentification/verify_email.page.dart';
 import 'package:get_fire_starter/app/ui/pages/home/home.page.dart';
+import 'package:get_fire_starter/app/ui/pages/welcome.page.dart';
 import 'package:get_fire_starter/app/ui/helpers/loading.page.dart';
 import '../app.binding.dart';
 part './app_routes.dart';
@@ -16,14 +17,16 @@ class AppPages {
       binding: HomeBinding(),
     ),
     GetPage(
+      name: Routes.WELCOM,
+      page: () => WelcomePage(),
+    ),
+    GetPage(
       name: Routes.LOGIN,
       page: () => LoginPage(),
-      binding: AuthBinding(),
     ),
     GetPage(
       name: Routes.REGISTER,
       page: () => RegisterPage(),
-      binding: AuthBinding(),
     ),
     GetPage(
       name: Routes.EMAIL,
@@ -33,7 +36,6 @@ class AppPages {
     GetPage(
       name: Routes.RESET,
       page: () => ForgotPasswordPage(),
-      binding: AuthBinding(),
     ),
     GetPage(
       name: Routes.LOADING,

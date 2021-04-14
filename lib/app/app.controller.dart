@@ -33,7 +33,7 @@ class AppController extends GetxController {
 
       // if user is not logged in
       if (user == null)
-        Get.offAllNamed("/login");
+        Get.offAllNamed("/welcome");
       // if user is not verifed
       else if (!user.emailVerified && allowVerifyEmail)
         Get.offAllNamed("/verify/email");

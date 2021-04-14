@@ -14,7 +14,6 @@ class RegisterPage extends GetView<AuthController> {
       title: 'Lets Register',
       subtitle: 'Welcome !',
       mainButtonTitle: 'Sign Up',
-      validationMessage: controller.error.value,
       onMainButtonTapped: () {
         final FormState form = key.currentState;
         if (form.validate()) {

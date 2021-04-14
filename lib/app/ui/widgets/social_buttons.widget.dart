@@ -42,8 +42,12 @@ class SocialButtonsWidget extends GetView<AuthController> {
                       valueColor: AlwaysStoppedAnimation(Colors.white),
                     )
                   : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         FaIcon(FontAwesomeIcons.apple, color: AppColors.WHITE),
+                        SizedBox(
+                          width: 10.0,
+                        ),
                         Text(
                           "Continue with Apple",
                           style: Theme.of(context).textTheme.headline1.copyWith(
@@ -77,8 +81,12 @@ class SocialButtonsWidget extends GetView<AuthController> {
                     valueColor: AlwaysStoppedAnimation(Colors.white),
                   )
                 : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       FaIcon(FontAwesomeIcons.google, color: AppColors.DARK),
+                      SizedBox(
+                        width: 10.0,
+                      ),
                       Text(
                         "Sign up with Google",
                         style: Theme.of(context).textTheme.headline1.copyWith(

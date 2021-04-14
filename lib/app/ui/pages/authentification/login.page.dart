@@ -14,7 +14,6 @@ class LoginPage extends GetView<AuthController> {
       title: 'Lets sign you in',
       subtitle: 'Welcome back.\nYou\'ve been missed!',
       mainButtonTitle: 'Log In',
-      validationMessage: controller.error.value,
       onMainButtonTapped: () {
         final FormState form = key.currentState;
         if (form.validate()) {
