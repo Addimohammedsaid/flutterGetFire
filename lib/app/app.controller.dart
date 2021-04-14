@@ -38,10 +38,7 @@ class AppController extends GetxController {
       else if (!user.emailVerified && allowVerifyEmail)
         Get.offAllNamed("/verify/email");
       // if user is verifed & logged in
-      else if (user.emailVerified)
-        Get.offAllNamed("/");
-      // default redirect to loading page
-      else if (allowLoading) Get.offNamed("/loading");
+      else if (user.emailVerified) Get.offAllNamed("/");
     });
 
     super.onInit();

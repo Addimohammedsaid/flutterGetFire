@@ -106,7 +106,17 @@ class AuthController extends GetxController {
     }
   }
 
-  onForgotPassword() {}
+  sendResetPassword() {
+    this.authService.sendPasswordResetMail(email);
+  }
+
+  resetPassword() {
+    this.authService.changePassword(password);
+  }
+
+  onForgotPassword() {
+    Get.toNamed("/forgot/password");
+  }
 
   navigateToCreateAccount() {
     Get.toNamed("/register");

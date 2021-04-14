@@ -31,9 +31,8 @@ class CloudFirestoreApi {
       await firestore.collection(collection).doc(id).update(obj);
 
   // update
-  Future<void> deleteDocument(id) async {
-    await firestore.collection(collection).doc(id).delete();
-  }
+  Future<void> deleteDocument(id) async =>
+      await firestore.collection(collection).doc(id).delete();
 
   // other Requests
   // Check If Document Exists
