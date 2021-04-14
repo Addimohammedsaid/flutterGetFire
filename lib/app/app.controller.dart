@@ -14,6 +14,7 @@ class AppController extends GetxController {
   AuthentificationService _auth = AuthentificationService();
 
   bool allowVerifyEmail = true;
+  bool allowResetPassword = false;
   bool allowLoading = true;
 
   @override
@@ -38,7 +39,9 @@ class AppController extends GetxController {
       else if (!user.emailVerified && allowVerifyEmail)
         Get.offAllNamed("/verify/email");
       // if user is verifed & logged in
-      else if (user.emailVerified) Get.offAllNamed("/");
+      else if (user.emailVerified)
+        Get.offAllNamed("/");
+      else if (allowResetPassword) Get.offAllNamed("/change/password");
     });
 
     super.onInit();

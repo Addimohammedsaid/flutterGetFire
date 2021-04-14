@@ -29,14 +29,10 @@ class AuthController extends GetxController {
       // reset validation errors to nothing
       error.value = null;
 
-      final result = await this
-          .authService
-          .createUserWithEmailAndPassword(email, password);
-
-      // if user properly created goto next step
-      if (result != null) Get.offAndToNamed("/select/location");
+      await this.authService.createUserWithEmailAndPassword(email, password);
     } catch (e) {
-      print(e);
+      error.value = e;
+      Get.snackbar("Error", e.value);
     }
   }
 
