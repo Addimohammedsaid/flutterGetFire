@@ -3,6 +3,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:get_fire_starter/app/helpers/authentication_state.dart';
 
 import 'data/services/authentification.service.dart';
 
@@ -10,11 +11,13 @@ class AppController extends GetxController {
   // var for automatically start collecting data
   FirebaseAnalytics analytics;
 
-  // used for getting user data
-  AuthentificationService _auth = AuthentificationService();
+  // initialize services
+  final AuthentificationService authService = AuthentificationService();
 
-  bool allowVerifyEmail = true;
-  bool allowResetPassword = false;
+  final _authenticationStateStream = AuthenticationState().obs;
+
+  get state => _authenticationStateStream.value;
+  set state(value) => _authenticationStateStream.value = value;
 
   @override
   onInit() {
@@ -27,25 +30,20 @@ class AppController extends GetxController {
     // Pass all uncaught errors to Crashlytics.
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
-    // listen to user change events
-    _auth.getUserChanges().listen((user) {
-      print(user);
-
-      // if user is not logged in
-      if (user == null)
-        Get.offAllNamed("/welcome");
-      // if user is not verifed
-      else if (!user.emailVerified && allowVerifyEmail)
-        Get.offAllNamed("/verify/email");
-      // if user is verifed & logged in
-      else if (user.emailVerified == true)
-        Get.offAllNamed("/");
-      else if (allowResetPassword)
-        Get.offAllNamed("/change/password");
-      else
-        Get.toNamed("/loading");
-    });
+    this._getAuthenticatedUser();
 
     super.onInit();
+  }
+
+  void _getAuthenticatedUser() {
+    _authenticationStateStream.value = AuthenticationLoading();
+
+    final user = authService.user;
+
+    if (user == null) {
+      _authenticationStateStream.value = UnAuthenticated();
+    } else {
+      _authenticationStateStream.value = Authenticated(user: user);
+    }
   }
 }

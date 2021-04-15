@@ -1,6 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_fire_starter/app/data/services/authentification.service.dart';
+import 'package:get_fire_starter/app/helpers/authentication_state.dart';
+
+import '../app.controller.dart';
 
 class AuthController extends GetxController {
   // initialize variables
@@ -20,6 +23,8 @@ class AuthController extends GetxController {
 
   // initialize services
   final AuthentificationService authService;
+
+  AppController appController = Get.find();
 
   AuthController({@required this.authService}) : assert(authService != null);
 
@@ -90,7 +95,11 @@ class AuthController extends GetxController {
   // sign out
   void signOut() async {
     try {
-      await this.authService.signOut();
+      this.appController.state = AuthenticationLoading();
+      await this
+          .authService
+          .signOut()
+          .then((value) => this.appController.state = UnAuthenticated);
     } catch (e) {
       error.value = e;
       Get.snackbar("Error", error.value);

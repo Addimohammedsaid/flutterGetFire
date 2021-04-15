@@ -189,7 +189,7 @@ class AuthentificationService extends GetxService {
     try {
       return await _auth.signOut();
     } catch (e) {
-      throw e;
+      throw e.code;
     }
   }
 }

@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_fire_starter/app/app.page.dart';
 
 import 'app/app.binding.dart';
 import 'app/routes/app_pages.dart';
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
       ],
       fallbackLocale: AppTranslation.fallbackLocale,
       translations: AppTranslation(),
-      initialRoute: "/welcome",
+      home: AppPage(),
       getPages: AppPages.pages,
     );
   }

@@ -29,6 +29,7 @@ dependencies:
 
   # Logic
   get: ^4.1.4
+  equatable: ^2.0.0
   crypto: ^3.0.1
   validators: ^2.0.0
 
