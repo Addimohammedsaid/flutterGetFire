@@ -12,24 +12,25 @@ class HomeList extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetX<HomeController>(
       builder: (controller) {
-        final users = controller.users;
-        if (controller != null && controller.users != null) {
-          return SliverGrid(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 25.0,
-                crossAxisSpacing: 25.0,
-                childAspectRatio: itemWidth / itemHeight),
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return ListItem(users[index]);
-              },
-              childCount: users.length ?? 0,
-            ),
-          );
-        } else {
-          return Text("loading...");
-        }
+        return Container();
+        //   final users = controller.users;
+        //   if (controller != null && users != null) {
+        //     return SliverGrid(
+        //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        //           crossAxisCount: 2,
+        //           mainAxisSpacing: 25.0,
+        //           crossAxisSpacing: 25.0,
+        //           childAspectRatio: itemWidth / itemHeight),
+        //       delegate: SliverChildBuilderDelegate(
+        //         (BuildContext context, int index) {
+        //           return ListItem(users[index]);
+        //         },
+        //         childCount: users.length ?? 0,
+        //       ),
+        //     );
+        //   } else {
+        //     return Text("loading...");
+        //   }
       },
     );
   }

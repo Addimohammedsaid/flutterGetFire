@@ -9,28 +9,21 @@ class ListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Positioned(
-          bottom: 0,
-          left: 0,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              child: Text(
-                this.user.username,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: AppColors.DARK,
-                  fontWeight: FontWeight.bold,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SizedBox(
+        height: 150.0,
+        child: Text(
+          this.user.username,
+          style: TextStyle(
+            fontSize: 16,
+            color: AppColors.DARK,
+            fontWeight: FontWeight.bold,
           ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
-      ],
+      ),
     );
   }
 }
