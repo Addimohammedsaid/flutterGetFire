@@ -8,11 +8,6 @@ import 'package:get_fire_starter/app/controller/auth.controller.dart';
 import 'package:get_fire_starter/app/core/theme/app_color.dart';
 
 class SocialButtonsWidget extends GetView<AuthController> {
-  // action type of buttons
-  final bool signup;
-
-  SocialButtonsWidget({this.signup});
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -26,9 +21,7 @@ class SocialButtonsWidget extends GetView<AuthController> {
         // continue with apple
         if (Platform.isIOS)
           GestureDetector(
-            onTap: () => signup
-                ? controller.signUpWithApple()
-                : controller.signInWithApple(),
+            onTap: () => controller.signInWithApple(),
             child: Container(
               width: double.infinity,
               padding: EdgeInsets.all(8.0),
@@ -63,9 +56,7 @@ class SocialButtonsWidget extends GetView<AuthController> {
           height: 10.0,
         ),
         GestureDetector(
-          onTap: () => signup
-              ? controller.signUpWithGoogle()
-              : controller.signInWithGoogle(),
+          onTap: () => controller.signInWithGoogle(),
           child: Container(
             width: double.infinity,
             padding: EdgeInsets.all(8.0),

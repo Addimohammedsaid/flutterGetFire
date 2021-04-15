@@ -35,9 +35,6 @@ class VerifyEmailController extends GetxController {
 
   @override
   void onInit() {
-    // lock navigation
-    appController.allowVerifyEmail = false;
-
     this.sendMail();
 
     this.sendMailFunc.value = this.timerFunction();

@@ -34,9 +34,9 @@ class AuthController extends GetxController {
       // reset validation errors to nothing
       error.value = null;
 
-      final user = await this
-          .authService
-          .createUserWithEmailAndPassword(email, password);
+      this.appController.state = AuthenticationLoading();
+
+      this.authService.createUserWithEmailAndPassword(email, password);
     } catch (e) {
       error.value = e;
       Get.snackbar("Error", error.value);
@@ -46,7 +46,16 @@ class AuthController extends GetxController {
   // login using email & password
   void signInUserWithEmailAndPassword() async {
     try {
-      await this.authService.signInUserWithEmailAndPassword(email, password);
+      // reset validation errors to nothing
+      error.value = null;
+
+      this.appController.state = AuthenticationLoading();
+
+      await this
+          .authService
+          .signInUserWithEmailAndPassword(email, password)
+          .then(
+              (value) => this.appController.state = Authenticated(user: value));
     } catch (e) {
       error.value = e;
       Get.snackbar("Error", error.value);
@@ -54,38 +63,30 @@ class AuthController extends GetxController {
   }
 
   // google singup & login
-  void signUpWithGoogle() async {
+  void signInWithGoogle() async {
     try {
-      await this.authService.signInWithGoogle();
+      final result = await this.authService.signInWithGoogle();
+
+      print(result.additionalUserInfo);
+
+      if (result.additionalUserInfo.isNewUser) {
+        // goto specifique route for exemple
+      } else
+        this.appController.state = Authenticated(user: result.user);
     } catch (e) {
       print(e);
     }
   }
 
   // google singup & login
-  void signUpWithApple() async {
+  void signInWithApple() async {
     try {
-      await this.authService.signInWithApple();
-    } catch (e) {
-      error.value = e;
-      Get.snackbar("Error", error.value);
-    }
-  }
+      final result = await this.authService.signInWithApple();
 
-  // google singup & login
-  void signInWithGoogle() {
-    try {
-      this.authService.signInWithGoogle();
-    } catch (e) {
-      error.value = e;
-      Get.snackbar("Error", error.value);
-    }
-  }
-
-  // appel signup & login
-  void signInWithApple() {
-    try {
-      this.authService.signInWithApple();
+      if (result.additionalUserInfo.isNewUser) {
+        // goto specifique route for exemple
+      } else
+        this.appController.state = Authenticated(user: result.user);
     } catch (e) {
       error.value = e;
       Get.snackbar("Error", error.value);

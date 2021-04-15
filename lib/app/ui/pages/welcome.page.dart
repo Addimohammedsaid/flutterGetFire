@@ -38,9 +38,7 @@ class WelcomePage extends GetView<AuthController> {
               ),
             ),
             verticalSpaceRegular,
-            SocialButtonsWidget(
-              signup: true,
-            ),
+            SocialButtonsWidget(),
           ],
         ),
       ),
