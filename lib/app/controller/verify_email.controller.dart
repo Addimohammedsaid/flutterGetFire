@@ -12,10 +12,6 @@ class VerifyEmailController extends GetxController {
 
   get email => this.authService.user.email;
 
-  // for setting waiting time
-  Timer _timer;
-  get timer => this._timer;
-
   // countdown to resend mail
   RxInt _countDown = 0.obs;
   get countDown => this._countDown.value;
@@ -37,8 +33,7 @@ class VerifyEmailController extends GetxController {
 
     // check user is verfied
     // every 10 seconds
-    this._timer =
-        new Timer.periodic(timeToReloadUser, (timer) => this.reload(timer));
+    new Timer.periodic(timeToReloadUser, (timer) => this.reload(timer));
 
     super.onInit();
   }
@@ -51,7 +46,8 @@ class VerifyEmailController extends GetxController {
 
     if (this.authService.isVerifiedEmail()) {
       // do somthing if verified.....
-      Get.toNamed("/");
+      timer.cancel();
+      Get.offAndToNamed("/");
     }
   }
 
@@ -90,7 +86,6 @@ class VerifyEmailController extends GetxController {
 
   @override
   void dispose() {
-    this._timer.cancel();
     super.dispose();
   }
 }

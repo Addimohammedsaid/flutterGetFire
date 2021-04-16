@@ -7,12 +7,18 @@ import 'package:get_fire_starter/app/ui/pages/home/home.page.dart';
 import 'package:get_fire_starter/app/ui/pages/welcome.page.dart';
 import 'package:get_fire_starter/app/ui/helpers/loading.page.dart';
 import '../app.binding.dart';
+import '../app.page.dart';
 part './app_routes.dart';
 
 class AppPages {
   static final pages = [
     GetPage(
       name: Routes.INITIAL,
+      page: () => AppPage(),
+      binding: AppBinding(),
+    ),
+    GetPage(
+      name: Routes.HOME,
       page: () => HomePage(),
       binding: HomeBinding(),
     ),

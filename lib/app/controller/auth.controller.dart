@@ -31,6 +31,7 @@ class AuthController extends GetxController {
       AuthenticationState().obs;
 
   get state => _authenticationStateStream.value;
+  set state(value) => _authenticationStateStream.value = value;
 
   AuthController({@required this.authService, @required this.userRepository})
       : assert(authService != null, userRepository != null);
@@ -47,12 +48,11 @@ class AuthController extends GetxController {
     final user = authService.user;
 
     if (user == null) {
-      _authenticationStateStream.value = UnAuthenticated();
+      state = UnAuthenticated();
     } else if (!user.emailVerified) {
-      _authenticationStateStream.value =
-          UnVerfiedEmail(authService: authService);
+      state = UnVerifiedEmail(authService: authService);
     } else {
-      _authenticationStateStream.value = Authenticated(user: user);
+      state = Authenticated(user: user);
     }
   }
 
@@ -62,7 +62,7 @@ class AuthController extends GetxController {
       // reset validation errors to nothing
       error.value = null;
 
-      this._authenticationStateStream.value = AuthenticationLoading();
+      state = AuthenticationLoading();
 
       final result = await this
           .authService
@@ -77,7 +77,7 @@ class AuthController extends GetxController {
             isEmailVerified: result.emailVerified));
 
         // set user as authenticated
-        this._authenticationStateStream.value = Authenticated(user: result);
+        state = Authenticated(user: result);
 
         // go to next step
         Get.offAndToNamed("/");
@@ -91,16 +91,18 @@ class AuthController extends GetxController {
   // login using email & password
   void signInUserWithEmailAndPassword() async {
     try {
-      // reset validation errors to nothing
-      error.value = null;
+      state = AuthenticationLoading();
 
-      this._authenticationStateStream.value = AuthenticationLoading();
-
-      await this
+      final result = await this
           .authService
-          .signInUserWithEmailAndPassword(email, password)
-          .then((value) => this._authenticationStateStream.value =
-              Authenticated(user: value));
+          .signInUserWithEmailAndPassword(email, password);
+
+      if (result != null && result.emailVerified)
+        state = Authenticated(user: result);
+      else if (result != null)
+        state = UnVerifiedEmail(authService: authService);
+
+      Get.offAndToNamed("/");
     } catch (e) {
       error.value = e;
       Get.snackbar("Error", error.value);
@@ -122,8 +124,7 @@ class AuthController extends GetxController {
             isEmailVerified: true));
 
         // set user as authenticated
-        this._authenticationStateStream.value =
-            Authenticated(user: result.user);
+        state = Authenticated(user: result.user);
       } else {
         // update user
         this.userRepository.edit(
@@ -147,8 +148,7 @@ class AuthController extends GetxController {
       if (result.additionalUserInfo.isNewUser) {
         // goto specifique route for exemple
       } else
-        this._authenticationStateStream.value =
-            Authenticated(user: result.user);
+        state = Authenticated(user: result.user);
     } catch (e) {
       error.value = e;
       Get.snackbar("Error", error.value);
@@ -158,8 +158,9 @@ class AuthController extends GetxController {
   // sign out
   void signOut() async {
     try {
-      print("signout");
-      this.authService.signOut();      
+      this.authService.signOut().then((value) => state = UnAuthenticated());
+
+      Get.offAndToNamed("/");
     } catch (e) {
       error.value = e;
       Get.snackbar("Error", error.value);

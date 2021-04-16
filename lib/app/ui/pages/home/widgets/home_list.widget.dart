@@ -4,34 +4,26 @@ import 'package:get_fire_starter/app/controller/home.controller.dart';
 
 import './list_item.widget.dart';
 
-class HomeList extends StatelessWidget {
+class HomeList extends GetWidget<HomeController> {
   final double itemHeight = 150;
   final double itemWidth = Get.width / 2 - 100;
 
   @override
   Widget build(BuildContext context) {
-    return GetX<HomeController>(
-      builder: (controller) {
-        return Container();
-        //   final users = controller.users;
-        //   if (controller != null && users != null) {
-        //     return SliverGrid(
-        //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        //           crossAxisCount: 2,
-        //           mainAxisSpacing: 25.0,
-        //           crossAxisSpacing: 25.0,
-        //           childAspectRatio: itemWidth / itemHeight),
-        //       delegate: SliverChildBuilderDelegate(
-        //         (BuildContext context, int index) {
-        //           return ListItem(users[index]);
-        //         },
-        //         childCount: users.length ?? 0,
-        //       ),
-        //     );
-        //   } else {
-        //     return Text("loading...");
-        //   }
-      },
-    );
+    return Obx(() => controller != null && controller.users != null
+        ? SliverGrid(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 25.0,
+                crossAxisSpacing: 25.0,
+                childAspectRatio: itemWidth / itemHeight),
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return ListItem(controller.users[index]);
+              },
+              childCount: controller.users.length ?? 0,
+            ),
+          )
+        : SliverToBoxAdapter(child: Text("loading...")));
   }
 }

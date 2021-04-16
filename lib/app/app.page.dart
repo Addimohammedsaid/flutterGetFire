@@ -13,7 +13,6 @@ class AppPage extends GetWidget<AppController> {
   @override
   Widget build(BuildContext context) {
     return GetX<AuthController>(builder: (AuthController authcontroller) {
-      //
       if (authcontroller.state is UnAuthenticated) {
         return WelcomePage();
       }
@@ -22,7 +21,7 @@ class AppPage extends GetWidget<AppController> {
         return HomePage();
       }
 
-      if (authcontroller.state is UnVerfiedEmail) {
+      if (authcontroller.state is UnVerifiedEmail) {
         return VerifyEmailPage();
       }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_fire_starter/app/controller/auth.controller.dart';
+import 'package:get_fire_starter/app/helpers/authentication_state.dart';
 import 'package:get_fire_starter/app/ui/helpers/auth.layout.dart';
 import 'package:get_fire_starter/app/ui/helpers/style.dart';
 import 'package:validators/validators.dart';
@@ -13,6 +14,7 @@ class RegisterPage extends GetView<AuthController> {
         body: AuthenticationLayout(
       title: 'Lets Register',
       subtitle: 'Welcome !',
+      busy: controller.state == AuthenticationLoading(),
       mainButtonTitle: 'Sign Up',
       onMainButtonTapped: () {
         final FormState form = key.currentState;

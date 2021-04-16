@@ -14,7 +14,7 @@ class ListItem extends StatelessWidget {
       child: SizedBox(
         height: 150.0,
         child: Text(
-          this.user.username,
+          this.user.email,
           style: TextStyle(
             fontSize: 16,
             color: AppColors.DARK,
