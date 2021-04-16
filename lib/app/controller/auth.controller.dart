@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_fire_starter/app/data/model/user.model.dart';
+import 'package:get_fire_starter/app/data/repository/user.repository.dart';
 import 'package:get_fire_starter/app/data/services/authentification.service.dart';
 
 import 'package:get_fire_starter/app/helpers/authentication_state.dart';
@@ -22,13 +25,15 @@ class AuthController extends GetxController {
 
   // initialize services
   final AuthentificationService authService;
+  final UserRepository userRepository;
 
   Rx<AuthenticationState> _authenticationStateStream =
       AuthenticationState().obs;
 
   get state => _authenticationStateStream.value;
 
-  AuthController({@required this.authService}) : assert(authService != null);
+  AuthController({@required this.authService, @required this.userRepository})
+      : assert(authService != null, userRepository != null);
 
   @override
   onInit() {
@@ -64,11 +69,18 @@ class AuthController extends GetxController {
           .createUserWithEmailAndPassword(email, password);
 
       if (result != null) {
+        // create user
+        this.userRepository.add(UserModel(
+            createdAt: result.metadata.creationTime,
+            email: result.email,
+            uid: result.uid,
+            isEmailVerified: result.emailVerified));
+
+        // set user as authenticated
         this._authenticationStateStream.value = Authenticated(user: result);
+
+        // go to next step
         Get.offAndToNamed("/");
-      } else {
-        this._authenticationStateStream.value =
-            AuthenticationFailure(message: "failure");
       }
     } catch (e) {
       error.value = e;
@@ -101,10 +113,29 @@ class AuthController extends GetxController {
       final result = await this.authService.signInWithGoogle();
 
       if (result.additionalUserInfo.isNewUser) {
-        // goto specifique route for exemple
+        // create user
+        this.userRepository.add(UserModel(
+            createdAt: result.user.metadata.creationTime,
+            email: result.user.email,
+            uid: result.user.uid,
+            username: result.additionalUserInfo.username,
+            isEmailVerified: true));
+
+        // set user as authenticated
+        this._authenticationStateStream.value =
+            Authenticated(user: result.user);
+      } else {
+        // update user
+        this.userRepository.edit(
+            UserModel(
+              username: result.additionalUserInfo.username,
+            ),
+            result.user.uid);
       }
-    } catch (e) {
-      print(e);
+    } on PlatformException catch (error) {
+      print(error);
+    } catch (err) {
+      Get.snackbar("Error", error.value);
     }
   }
 
@@ -127,12 +158,8 @@ class AuthController extends GetxController {
   // sign out
   void signOut() async {
     try {
-      this._authenticationStateStream.value = AuthenticationLoading();
-
-      this.authService.signOut().then((value) => () {
-            this._authenticationStateStream.value = UnAuthenticated();
-            Get.offAndToNamed("/welcome");
-          });
+      print("signout");
+      this.authService.signOut();      
     } catch (e) {
       error.value = e;
       Get.snackbar("Error", error.value);

@@ -27,11 +27,11 @@ class UserRepository {
     return apiClient.deleteDocument(id);
   }
 
-  edit(obj) {
-    return apiClient.updateDocument(obj, obj.id);
+  edit(obj, id) {
+    return apiClient.updateDocument(obj, id);
   }
 
-  add(obj) {
-    return apiClient.postDocument(obj);
+  add(UserModel obj) {
+    return apiClient.postDocument(obj.toJson());
   }
 }

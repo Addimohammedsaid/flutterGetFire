@@ -23,8 +23,9 @@ class CloudFirestoreApi {
       firestore.collection(collection).doc(id).get();
 
   // Post request
-  Future<void> postDocument(obj, {id}) async =>
-      await firestore.collection(collection).doc(id).set(obj);
+  Future<void> postDocument(obj, {id}) async => id != null
+      ? await firestore.collection(collection).doc(id).set(obj)
+      : await firestore.collection(collection).doc().set(obj);
 
   // update
   Future<void> updateDocument(obj, id) async =>

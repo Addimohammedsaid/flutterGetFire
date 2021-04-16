@@ -1,10 +1,11 @@
 class UserModel {
+  String uid;
   String email;
   String username;
-  String uid;
   DateTime createdAt;
+  bool isEmailVerified;
 
-  UserModel({this.email, this.createdAt});
+  UserModel({this.email, this.createdAt, this.isEmailVerified, this.uid, this.username});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     this.uid = json['uid'] ?? "";
@@ -19,6 +20,7 @@ class UserModel {
     data['username'] = this.username;
     data['email'] = this.email;
     data['createdAt'] = this.createdAt;
+    data['isEmailVerified'] = this.isEmailVerified;
     return data;
   }
 }

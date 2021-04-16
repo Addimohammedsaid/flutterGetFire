@@ -60,10 +60,9 @@ class AuthentificationService extends GetxService {
 
   // verify email
   Future reloadUser() async {
-    FirebaseAuth auth = FirebaseAuth.instance;
     try {
       // If successful, reload the user:
-      auth.currentUser.reload();
+      this.user.reload();
     } on FirebaseAuthException catch (e) {
       throw (e.code);
     }

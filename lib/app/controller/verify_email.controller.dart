@@ -37,12 +37,13 @@ class VerifyEmailController extends GetxController {
 
     // check user is verfied
     // every 10 seconds
-    this._timer = new Timer(timeToReloadUser, reload);
+    this._timer =
+        new Timer.periodic(timeToReloadUser, (timer) => this.reload(timer));
 
     super.onInit();
   }
 
-  reload() {
+  reload(Timer timer) {
     print("reload....");
 
     // email verification can't be listend to
