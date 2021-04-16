@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:get_fire_starter/app/app.controller.dart';
 import 'package:get_fire_starter/app/data/services/authentification.service.dart';
 
 class VerifyEmailController extends GetxController {
@@ -11,9 +10,6 @@ class VerifyEmailController extends GetxController {
   VerifyEmailController({@required this.authService})
       : assert(authService != null);
 
-  // used to controller navigation
-  AppController appController = Get.find();
-
   get email => this.authService.user.email;
 
   // for setting waiting time
@@ -21,7 +17,7 @@ class VerifyEmailController extends GetxController {
   get timer => this._timer;
 
   // countdown to resend mail
-  RxInt _countDown = RxInt(null);
+  RxInt _countDown = 0.obs;
   get countDown => this._countDown.value;
 
   RxBool _busy = RxBool(false);
@@ -47,17 +43,20 @@ class VerifyEmailController extends GetxController {
   }
 
   reload() {
+    print("reload....");
+
     // email verification can't be listend to
     this.authService.reloadUser();
 
     if (this.authService.isVerifiedEmail()) {
       // do somthing if verified.....
+      Get.toNamed("/");
     }
   }
 
   sendMail() async {
     if (await authService.sendEmailVerification()) {
-      print("email sent");
+      print("email have been sent");
     }
   }
 
@@ -77,9 +76,6 @@ class VerifyEmailController extends GetxController {
         Duration(seconds: 1),
         (Timer timer) {
           if (this._countDown.value == 0) {
-            // reset countDown
-            this._countDown.value = null;
-
             // stop the function
             timer.cancel();
           } else {

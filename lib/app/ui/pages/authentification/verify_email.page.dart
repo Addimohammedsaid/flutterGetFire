@@ -6,7 +6,7 @@ import 'package:get_fire_starter/app/ui/helpers/auth.layout.dart';
 import 'package:get_fire_starter/app/ui/helpers/style.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 
-class VerifyEmailPage extends GetView<VerifyEmailController> {
+class VerifyEmailPage extends GetWidget<VerifyEmailController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +14,7 @@ class VerifyEmailPage extends GetView<VerifyEmailController> {
       () => AuthenticationLayout(
         title: "Email Verification",
         subtitle: "Please verify your email.",
-        mainButtonTitle: controller.countDown != null
+        mainButtonTitle: controller.countDown > 0
             ? controller.countDown.toString()
             : "Resend Mail",
         onMainButtonTapped: () => controller.sendMailFunc.value(),

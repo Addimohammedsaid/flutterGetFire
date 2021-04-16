@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_fire_starter/app/app.controller.dart';
+import 'package:get_fire_starter/app/ui/pages/authentification/verify_email.page.dart';
 
+import 'controller/auth.controller.dart';
 import 'helpers/authentication_state.dart';
 import 'ui/helpers/loading.page.dart';
 import 'ui/pages/home/home.page.dart';
 import 'ui/pages/welcome.page.dart';
 
-class AppPage extends GetView<AppController> {
+class AppPage extends GetWidget<AppController> {
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
+    return GetX<AuthController>(builder: (AuthController authcontroller) {
       //
-      if (controller.state is UnAuthenticated) {
+      if (authcontroller.state is UnAuthenticated) {
         return WelcomePage();
       }
 
-      if (controller.state is Authenticated) {
+      if (authcontroller.state is Authenticated) {
         return HomePage();
+      }
+
+      if (authcontroller.state is UnVerfiedEmail) {
+        return VerifyEmailPage();
       }
 
       return LoadingPage();

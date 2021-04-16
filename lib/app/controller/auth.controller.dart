@@ -1,9 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_fire_starter/app/data/services/authentification.service.dart';
-import 'package:get_fire_starter/app/helpers/authentication_state.dart';
 
-import '../app.controller.dart';
+import 'package:get_fire_starter/app/helpers/authentication_state.dart';
 
 class AuthController extends GetxController {
   // initialize variables
@@ -24,9 +23,33 @@ class AuthController extends GetxController {
   // initialize services
   final AuthentificationService authService;
 
-  AppController appController = Get.find();
+  Rx<AuthenticationState> _authenticationStateStream =
+      AuthenticationState().obs;
+
+  get state => _authenticationStateStream.value;
 
   AuthController({@required this.authService}) : assert(authService != null);
+
+  @override
+  onInit() {
+    this._getAuthenticatedUser();
+    super.onInit();
+  }
+
+  void _getAuthenticatedUser() {
+    _authenticationStateStream.value = AuthenticationLoading();
+
+    final user = authService.user;
+
+    if (user == null) {
+      _authenticationStateStream.value = UnAuthenticated();
+    } else if (!user.emailVerified) {
+      _authenticationStateStream.value =
+          UnVerfiedEmail(authService: authService);
+    } else {
+      _authenticationStateStream.value = Authenticated(user: user);
+    }
+  }
 
   // creater using email & password
   void createUserWithEmailAndPassword() async {
@@ -34,9 +57,19 @@ class AuthController extends GetxController {
       // reset validation errors to nothing
       error.value = null;
 
-      this.appController.state = AuthenticationLoading();
+      this._authenticationStateStream.value = AuthenticationLoading();
 
-      this.authService.createUserWithEmailAndPassword(email, password);
+      final result = await this
+          .authService
+          .createUserWithEmailAndPassword(email, password);
+
+      if (result != null) {
+        this._authenticationStateStream.value = Authenticated(user: result);
+        Get.offAndToNamed("/");
+      } else {
+        this._authenticationStateStream.value =
+            AuthenticationFailure(message: "failure");
+      }
     } catch (e) {
       error.value = e;
       Get.snackbar("Error", error.value);
@@ -49,13 +82,13 @@ class AuthController extends GetxController {
       // reset validation errors to nothing
       error.value = null;
 
-      this.appController.state = AuthenticationLoading();
+      this._authenticationStateStream.value = AuthenticationLoading();
 
       await this
           .authService
           .signInUserWithEmailAndPassword(email, password)
-          .then(
-              (value) => this.appController.state = Authenticated(user: value));
+          .then((value) => this._authenticationStateStream.value =
+              Authenticated(user: value));
     } catch (e) {
       error.value = e;
       Get.snackbar("Error", error.value);
@@ -67,12 +100,9 @@ class AuthController extends GetxController {
     try {
       final result = await this.authService.signInWithGoogle();
 
-      print(result.additionalUserInfo);
-
       if (result.additionalUserInfo.isNewUser) {
         // goto specifique route for exemple
-      } else
-        this.appController.state = Authenticated(user: result.user);
+      }
     } catch (e) {
       print(e);
     }
@@ -86,7 +116,8 @@ class AuthController extends GetxController {
       if (result.additionalUserInfo.isNewUser) {
         // goto specifique route for exemple
       } else
-        this.appController.state = Authenticated(user: result.user);
+        this._authenticationStateStream.value =
+            Authenticated(user: result.user);
     } catch (e) {
       error.value = e;
       Get.snackbar("Error", error.value);
@@ -96,11 +127,12 @@ class AuthController extends GetxController {
   // sign out
   void signOut() async {
     try {
-      this.appController.state = AuthenticationLoading();
-      await this
-          .authService
-          .signOut()
-          .then((value) => this.appController.state = UnAuthenticated);
+      this._authenticationStateStream.value = AuthenticationLoading();
+
+      this.authService.signOut().then((value) => () {
+            this._authenticationStateStream.value = UnAuthenticated();
+            Get.offAndToNamed("/welcome");
+          });
     } catch (e) {
       error.value = e;
       Get.snackbar("Error", error.value);

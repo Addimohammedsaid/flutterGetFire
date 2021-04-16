@@ -11,7 +11,7 @@ export './bindings/verify.binding.dart';
 class AppBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put<AppController>((AppController()));
+    Get.put<AppController>(AppController());
     Get.put(AuthController(authService: new AuthentificationService()));
   }
 }
