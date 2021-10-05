@@ -1,64 +1,25 @@
 name: get_fire_starter
-description: A new Flutter project.
-
-# The following line prevents the package from being accidentally published to
-# pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-
 version: 1.0.0+1
-
+publish_to: none
+description: A new Flutter project.
 environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  cupertino_icons: ^1.0.2
+
+  get: 4.3.8
   flutter:
     sdk: flutter
-
-
-  #UI
-  cupertino_icons: ^1.0.2
-  font_awesome_flutter: ^9.0.0
-  open_mail_app: ^0.1.1
-
-  # Database
-  cloud_firestore: ^1.0.4
-
-  # Services
-  firebase_core: ^1.0.3
-  flutter_dotenv: ^3.1.0
-
-  # Logic
-  get: ^4.1.4
-  equatable: ^2.0.0
-  crypto: ^3.0.1
-  validators: ^2.0.0
-
-  # User Auth
-  firebase_auth: ^1.0.3
-  google_sign_in: ^5.0.1  
-  sign_in_with_apple: ^2.5.2
-
-  # Analytics
-  firebase_analytics: ^7.1.1
-  firebase_crashlytics: ^2.0.0
-
-  # Performance
-  firebase_performance:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-# The following section is specific to Flutter.
 flutter:
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
-  uses-material-design: true
-
-  # To add assets to your application, add an assets section, like this:
   assets:
     - assets/fonts/
     - assets/svg/
     - assets/png/
     - .env
+  uses-material-design: true
